@@ -11,25 +11,20 @@
       <div class="container">
         <div class="form">
           <h2>REGISTER</h2>
-          <form action="">
+          <form @submit.prevent="handleSubmit">
             <div class="inputBx">
-              <input type="text" required="required" />
+              <input type="text" required="required" v-model="first_name" />
               <span>First Name</span>
               <i class="fas fa-user-circle"></i>
             </div>
             <div class="inputBx">
-              <input type="text" required="required" />
+              <input type="text" required="required" v-model="last_name"/>
               <span>Last Name</span>
               <i class="fas fa-user-circle"></i>
             </div>
             <div class="inputBx">
-              <input type="text" required="required" />
+              <input type="text" required="required" v-model="email"/>
               <span>Email</span>
-              <i class="fas fa-user-circle"></i>
-            </div>
-            <div class="inputBx">
-              <input type="text" required="required" />
-              <span>Password</span>
               <i class="fas fa-user-circle"></i>
             </div>
             <div class="inputBx password">
@@ -38,12 +33,24 @@
                 type="password"
                 name="password"
                 required="required"
+                v-model="password"
               />
               <span>Password</span>
               <i class="fas fa-key"></i>
             </div>
+            <div class="inputBx password">
+              <input
+                id="password-input"
+                type="password"
+                name="password"
+                required="required"
+                v-model="password_confirm"
+              />
+              <span>Confirm Password</span>
+              <i class="fas fa-key"></i>
+            </div>
             <div class="inputBx">
-              <input type="submit" value="Register" disabled />
+              <input type="submit" value="Register" />
             </div>
           </form>
         </div>
@@ -53,8 +60,37 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'RegisterComponent'
+  name: 'RegisterComponent',
+  data() {
+    return {
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      password_confirm: '',
+    }
+  },
+  methods: {
+    async handleSubmit() {
+      const data = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        email: this.email,
+        password: this.password,
+        password_confirm: this.password_confirm
+      }
+      
+      const response = await axios.post('register', data);
+      
+      console.log(response);
+
+      this.$router.push('/login');
+      
+    }
+  },  
 }
 </script>
 
@@ -195,15 +231,17 @@ section {
     color: #fff;
     letter-spacing: 2px;
     margin-bottom: 30px;
+    text-align: center;
   }
 
   .inputBx {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
+    text-align: center;
 
     input {
-      width: 80%;
+      width: 100%;
       outline: none;
       border: none;
       border: 1px solid rgba(255, 255, 255, 0.2);

@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
       <div class="container">
-        <a href="#" class="navbar-brand d-flex align-items-center">
+        <router-link to="/" class="navbar-brand d-flex align-items-center">
           <i class="fa fa-snowflake-o fa-lg text-primary mr-2"></i
-          ><strong>JAVA02</strong></a
+          ><strong>DAC - JAVA02</strong></router-link
         >
         <button
           type="button"
@@ -17,12 +17,17 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div id="navbarSupportedContent" class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ml-auto" v-if="!user">
             <li class="nav-item active">
-              <a href="#" class="nav-link font-italic"> Login </a>
+              <router-link to="/login" class="nav-link font-italic"> Login </router-link>
             </li>
             <li class="nav-item active">
-              <a href="#" class="nav-link font-italic"> Register </a>
+              <router-link to="/register" class="nav-link font-italic"> Register </router-link>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto" v-if="user">
+            <li class="nav-item active">
+              <a href="javascript:void(0)" @click="handleClick" class="nav-link font-italic"> Logout </a>
             </li>
           </ul>
         </div>
@@ -32,7 +37,14 @@
 
 <script>
 export default {
-    name : 'NavComponent'
+  name : 'NavComponent',
+  props: ['user'],
+  methods: {
+    handleClick() {
+      localStorage.removeItem('token');
+      this.$router.push('/');
+    }
+  },
 }
 </script>
 

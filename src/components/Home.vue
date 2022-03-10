@@ -1,12 +1,19 @@
 <template>
   <div class="home">
-    <div class="home__inner">Welcome</div>
+    <div class="home__inner" v-if="user">
+      Welcome, {{ user.first_name}} {{ user.last_name }}
+    </div>
+    <div class="home__inner" v-if="!user">
+      You are not login
+    </div>
+    <div></div>
   </div>
 </template>
 
 <script>
 export default {
   name: "HomeComponent",
+  props: ['user'],
 };
 </script>
 

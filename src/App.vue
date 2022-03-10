@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <Nav />
-    <router-view/>
-    <Login />
+    <Nav :user="user" />
+    <router-view :user="user"/>
   </div>
 </template>
 
@@ -22,9 +21,10 @@ export default {
   margin: 0;
   padding: 0;
   font-family: "Lobster", cursive;
+  box-sizing: border-box;
 }
+
 body {
-  font-family: "Lobster", cursive;
   overflow: hidden;
 }
 </style>

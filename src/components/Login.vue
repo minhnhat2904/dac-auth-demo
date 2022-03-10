@@ -11,9 +11,9 @@
       <div class="container">
         <div class="form">
           <h2>LOGIN</h2>
-          <form action="">
+          <form @submit.prevent="handleSubmit">
             <div class="inputBx">
-              <input type="text" required="required" />
+              <input type="text" required="required" v-model="email" />
               <span>Login</span>
               <i class="fas fa-user-circle"></i>
             </div>
@@ -23,6 +23,7 @@
                 type="password"
                 name="password"
                 required="required"
+                v-model="password"
               />
               <span>Password</span>
               <i class="fas fa-key"></i>
@@ -41,8 +42,27 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-	name: 'LoginComponent'
+	name: 'LoginComponent',
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    async handleSubmit() {
+      const response = await axios.post('login', {
+        email: this.email,
+        password: this.password
+      });
+      console.log(response);
+      localStorage.setItem('token', response.data.token);
+      this.$router.push('/');
+    }
+  },
 };
 </script>
 
@@ -183,15 +203,17 @@ section {
     color: #fff;
     letter-spacing: 2px;
     margin-bottom: 30px;
+    text-align: center;
   }
 
   .inputBx {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
+    text-align: center;
 
     input {
-      width: 80%;
+      width: 100%;
       outline: none;
       border: none;
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -272,6 +294,7 @@ section {
     color: #fff;
     font-size: 15px;
     margin-top: 5px;
+    text-align: center;
 
     a {
       color: #fff;
