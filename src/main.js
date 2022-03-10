@@ -3,9 +3,10 @@ import App from './App.vue';
 import router from './router.js';
 import './axios';
 import store from './vuex';
+import cors from 'cors'
+Vue.use(cors);
 
 Vue.config.productionTip = false
-
 new Vue({
   router,
   store,

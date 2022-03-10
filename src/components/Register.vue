@@ -14,13 +14,8 @@
           <Error v-if="error" :error="error" />
           <form @submit.prevent="handleSubmit">
             <div class="inputBx">
-              <input type="text" required="required" v-model="first_name" />
-              <span>First Name</span>
-              <i class="fas fa-user-circle"></i>
-            </div>
-            <div class="inputBx">
-              <input type="text" required="required" v-model="last_name"/>
-              <span>Last Name</span>
+              <input type="text" required="required" v-model="username"/>
+              <span>User Name</span>
               <i class="fas fa-user-circle"></i>
             </div>
             <div class="inputBx">
@@ -68,8 +63,7 @@ export default {
   name: 'RegisterComponent',
   data() {
     return {
-      first_name: '',
-      last_name: '',
+      username: '',
       email: '',
       password: '',
       password_confirm: '',
@@ -82,14 +76,12 @@ export default {
   methods: {
     async handleSubmit() {
       const data = {
-        first_name: this.first_name,
-        last_name: this.last_name,
+        username: this.username,
         email: this.email,
         password: this.password,
-        password_confirm: this.password_confirm
       }
       try {
-        const response = await axios.post('register', data);
+        const response = await axios.post('/auth/signup', data);
         
         console.log(response);
   

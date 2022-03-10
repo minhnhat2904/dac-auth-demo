@@ -15,7 +15,7 @@ export default {
     Nav,
   },
   async created() {
-    const response = await axios.get('user');
+    const response = await axios.get('/test/private');
 
     this.$store.dispatch('user', response.data);
   }

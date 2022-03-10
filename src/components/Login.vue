@@ -15,7 +15,7 @@
           <form @submit.prevent="handleSubmit">
             <div class="inputBx">
               <input type="text" required="required" v-model="email" />
-              <span>Login</span>
+              <span>Email</span>
               <i class="fas fa-user-circle"></i>
             </div>
             <div class="inputBx password">
@@ -62,8 +62,8 @@ export default {
     async handleSubmit() {
 
       try {
-        const response = await axios.post('login', {
-          email: this.email,
+        const response = await axios.post('/auth/signin', {
+          username: this.username,
           password: this.password
         });
         localStorage.setItem('token', response.data.token);
