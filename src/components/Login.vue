@@ -11,6 +11,7 @@
       <div class="container">
         <div class="form">
           <h2>LOGIN</h2>
+          <Error v-if="error" :error="error" />
           <form @submit.prevent="handleSubmit">
             <div class="inputBx">
               <input type="text" required="required" v-model="email" />
@@ -30,10 +31,10 @@
             </div>
             <label class="remember"><input type="checkbox" /> Remember</label>
             <div class="inputBx">
-              <input type="submit" value="Log in" disabled />
+              <input type="submit" value="Log in" />
             </div>
           </form>
-          <p>Forgot password? <a href="#">Click Here</a></p>
+          <p>Forgot password? <router-link to="forgot">Click Here</router-link></p>
           <p>Don't have an account <a href="#">Register</a></p>
         </div>
       </div>
@@ -43,24 +44,34 @@
 
 <script>
 import axios from 'axios';
+import Error from './Error.vue';
 
 export default {
 	name: 'LoginComponent',
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: ''
     }
+  },
+  components: {
+    Error
   },
   methods: {
     async handleSubmit() {
-      const response = await axios.post('login', {
-        email: this.email,
-        password: this.password
-      });
-      console.log(response);
-      localStorage.setItem('token', response.data.token);
-      this.$router.push('/');
+
+      try {
+        const response = await axios.post('login', {
+          email: this.email,
+          password: this.password
+        });
+        localStorage.setItem('token', response.data.token);
+        this.$store.dispatch('user', response.data.user);
+        this.$router.push('/');
+      } catch (error) {
+        this.error = 'Invalid username or password';
+      }
     }
   },
 };

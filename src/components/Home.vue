@@ -11,9 +11,14 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
   name: "HomeComponent",
   props: ['user'],
+  computed: {
+    ...mapGetters(['user'])
+  }
 };
 </script>
 

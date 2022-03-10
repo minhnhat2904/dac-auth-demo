@@ -10,48 +10,15 @@
 
       <div class="container">
         <div class="form">
-          <h2>REGISTER</h2>
-          <Error v-if="error" :error="error" />
+          <h2>Forgot Password</h2>
           <form @submit.prevent="handleSubmit">
-            <div class="inputBx">
-              <input type="text" required="required" v-model="first_name" />
-              <span>First Name</span>
-              <i class="fas fa-user-circle"></i>
-            </div>
-            <div class="inputBx">
-              <input type="text" required="required" v-model="last_name"/>
-              <span>Last Name</span>
-              <i class="fas fa-user-circle"></i>
-            </div>
             <div class="inputBx">
               <input type="text" required="required" v-model="email"/>
               <span>Email</span>
               <i class="fas fa-user-circle"></i>
             </div>
-            <div class="inputBx password">
-              <input
-                id="password-input"
-                type="password"
-                name="password"
-                required="required"
-                v-model="password"
-              />
-              <span>Password</span>
-              <i class="fas fa-key"></i>
-            </div>
-            <div class="inputBx password">
-              <input
-                id="password-input"
-                type="password"
-                name="password"
-                required="required"
-                v-model="password_confirm"
-              />
-              <span>Confirm Password</span>
-              <i class="fas fa-key"></i>
-            </div>
             <div class="inputBx">
-              <input type="submit" value="Register" />
+              <input type="submit" value="Submit" />
             </div>
           </form>
         </div>
@@ -62,44 +29,23 @@
 
 <script>
 import axios from 'axios';
-import Error from './Error.vue';
 
 export default {
-  name: 'RegisterComponent',
-  data() {
-    return {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      password_confirm: '',
-      error: ''
+    name: 'ForgotPassword',
+    data() {
+        return {
+            email: ''
+        }
+    },
+    methods: {
+        async handleSubmit() {
+            const response = await axios.post('forgot', {
+                email: this.email
+            })
+
+            console.log(response);
+        }
     }
-  },
-  components: {
-    Error
-  },
-  methods: {
-    async handleSubmit() {
-      const data = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email,
-        password: this.password,
-        password_confirm: this.password_confirm
-      }
-      try {
-        const response = await axios.post('register', data);
-        
-        console.log(response);
-  
-        this.$router.push('/login');
-      } catch (error) {
-        this.error = "Error Occurred"
-      }
-      
-    }
-  },  
 }
 </script>
 
@@ -331,6 +277,7 @@ section {
     color: #fff;
     font-size: 15px;
     margin-top: 5px;
+    text-align: center;
 
     a {
       color: #fff;
